@@ -7,7 +7,7 @@ option go_package = "al3ksus.messenger.v1;messengerv1";
 service Users {
   rpc Register (RegisterRequest) returns (RegisterResponse);
   rpc Login (LoginRequest) returns (LoginResponse);
-  rpc ToInactive (ToInactiveRequest) returns (Empty);
+  rpc ToInactive (ToInactiveRequest) returns (ToInactiveResponse);
 }
 
 message RegisterRequest {
@@ -32,4 +32,4 @@ message ToInactiveRequest {
   int64 user_id = 1; // User ID of the user to make inactive
 }
 
-message Empty {}
+message ToInactiveResponse {}

@@ -30,7 +30,7 @@ const (
 type UsersClient interface {
 	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error)
 	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
-	ToInactive(ctx context.Context, in *ToInactiveRequest, opts ...grpc.CallOption) (*Empty, error)
+	ToInactive(ctx context.Context, in *ToInactiveRequest, opts ...grpc.CallOption) (*ToInactiveResponse, error)
 }
 
 type usersClient struct {
@@ -61,9 +61,9 @@ func (c *usersClient) Login(ctx context.Context, in *LoginRequest, opts ...grpc.
 	return out, nil
 }
 
-func (c *usersClient) ToInactive(ctx context.Context, in *ToInactiveRequest, opts ...grpc.CallOption) (*Empty, error) {
+func (c *usersClient) ToInactive(ctx context.Context, in *ToInactiveRequest, opts ...grpc.CallOption) (*ToInactiveResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Empty)
+	out := new(ToInactiveResponse)
 	err := c.cc.Invoke(ctx, Users_ToInactive_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -77,7 +77,7 @@ func (c *usersClient) ToInactive(ctx context.Context, in *ToInactiveRequest, opt
 type UsersServer interface {
 	Register(context.Context, *RegisterRequest) (*RegisterResponse, error)
 	Login(context.Context, *LoginRequest) (*LoginResponse, error)
-	ToInactive(context.Context, *ToInactiveRequest) (*Empty, error)
+	ToInactive(context.Context, *ToInactiveRequest) (*ToInactiveResponse, error)
 	mustEmbedUnimplementedUsersServer()
 }
 
@@ -94,7 +94,7 @@ func (UnimplementedUsersServer) Register(context.Context, *RegisterRequest) (*Re
 func (UnimplementedUsersServer) Login(context.Context, *LoginRequest) (*LoginResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
 }
-func (UnimplementedUsersServer) ToInactive(context.Context, *ToInactiveRequest) (*Empty, error) {
+func (UnimplementedUsersServer) ToInactive(context.Context, *ToInactiveRequest) (*ToInactiveResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ToInactive not implemented")
 }
 func (UnimplementedUsersServer) mustEmbedUnimplementedUsersServer() {}
