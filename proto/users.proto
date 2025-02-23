@@ -8,10 +8,6 @@ service Users {
   rpc Register (RegisterRequest) returns (RegisterResponse); // Register new user
   rpc Login (LoginRequest) returns (LoginResponse); // Login user
   rpc ToInactive (ToInactiveRequest) returns (ToInactiveResponse); // Switch user to inactive state
-  rpc SendFriend(SendFriendRequest) returns (SendFriendResponse); // Send new friend request
-  rpc AcceptFriend(AcceptFriendRequest) returns (AcceptFriendResponse); // Accept friend request
-  rpc DeleteFriend(DeleteFriendRequest) returns (DeleteFriendResponse); // Delete friend or reject friend request
-  rpc GetFriends(GetFriendsRequest) returns (GetFriendsResponse); // Get all accepted and non-accepted friend requests for user
 }
 
 message RegisterRequest {
@@ -37,36 +33,3 @@ message ToInactiveRequest {
 }
 
 message ToInactiveResponse {}
-
-message SendFriendRequest {
-    int64 sender_id = 1; // Sender user id
-    int64 recipient_id = 2; // Recipient user id
-}
-
-message SendFriendResponse {}
-
-message AcceptFriendRequest {
-    int64 friend_request_id = 1; // Friend request id
-}
-
-message AcceptFriendResponse {}
-
-message DeleteFriendRequest {
-    int64 friend_request_id = 1; // Friend request id
-}
-
-message DeleteFriendResponse {}
-
-message GetFriendsRequest {
-    int64 user_id = 1; // User id
-}
-
-message GetFriendsResponse {
-    repeated Friend friend = 1; // User's friend list
-}
-
-message Friend {
-    int64 friend_request_id = 1; // Friend request id
-    string friend_name = 2; // Friend username
-    bool accepted = 3; // Accepted or not flag
-}

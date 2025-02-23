@@ -19,13 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Users_Register_FullMethodName     = "/users.Users/Register"
-	Users_Login_FullMethodName        = "/users.Users/Login"
-	Users_ToInactive_FullMethodName   = "/users.Users/ToInactive"
-	Users_SendFriend_FullMethodName   = "/users.Users/SendFriend"
-	Users_AcceptFriend_FullMethodName = "/users.Users/AcceptFriend"
-	Users_DeleteFriend_FullMethodName = "/users.Users/DeleteFriend"
-	Users_GetFriends_FullMethodName   = "/users.Users/GetFriends"
+	Users_Register_FullMethodName   = "/users.Users/Register"
+	Users_Login_FullMethodName      = "/users.Users/Login"
+	Users_ToInactive_FullMethodName = "/users.Users/ToInactive"
 )
 
 // UsersClient is the client API for Users service.
@@ -35,10 +31,6 @@ type UsersClient interface {
 	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error)
 	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
 	ToInactive(ctx context.Context, in *ToInactiveRequest, opts ...grpc.CallOption) (*ToInactiveResponse, error)
-	SendFriend(ctx context.Context, in *SendFriendRequest, opts ...grpc.CallOption) (*SendFriendResponse, error)
-	AcceptFriend(ctx context.Context, in *AcceptFriendRequest, opts ...grpc.CallOption) (*AcceptFriendResponse, error)
-	DeleteFriend(ctx context.Context, in *DeleteFriendRequest, opts ...grpc.CallOption) (*DeleteFriendResponse, error)
-	GetFriends(ctx context.Context, in *GetFriendsRequest, opts ...grpc.CallOption) (*GetFriendsResponse, error)
 }
 
 type usersClient struct {
@@ -79,46 +71,6 @@ func (c *usersClient) ToInactive(ctx context.Context, in *ToInactiveRequest, opt
 	return out, nil
 }
 
-func (c *usersClient) SendFriend(ctx context.Context, in *SendFriendRequest, opts ...grpc.CallOption) (*SendFriendResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(SendFriendResponse)
-	err := c.cc.Invoke(ctx, Users_SendFriend_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *usersClient) AcceptFriend(ctx context.Context, in *AcceptFriendRequest, opts ...grpc.CallOption) (*AcceptFriendResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(AcceptFriendResponse)
-	err := c.cc.Invoke(ctx, Users_AcceptFriend_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *usersClient) DeleteFriend(ctx context.Context, in *DeleteFriendRequest, opts ...grpc.CallOption) (*DeleteFriendResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(DeleteFriendResponse)
-	err := c.cc.Invoke(ctx, Users_DeleteFriend_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *usersClient) GetFriends(ctx context.Context, in *GetFriendsRequest, opts ...grpc.CallOption) (*GetFriendsResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetFriendsResponse)
-	err := c.cc.Invoke(ctx, Users_GetFriends_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // UsersServer is the server API for Users service.
 // All implementations must embed UnimplementedUsersServer
 // for forward compatibility.
@@ -126,10 +78,6 @@ type UsersServer interface {
 	Register(context.Context, *RegisterRequest) (*RegisterResponse, error)
 	Login(context.Context, *LoginRequest) (*LoginResponse, error)
 	ToInactive(context.Context, *ToInactiveRequest) (*ToInactiveResponse, error)
-	SendFriend(context.Context, *SendFriendRequest) (*SendFriendResponse, error)
-	AcceptFriend(context.Context, *AcceptFriendRequest) (*AcceptFriendResponse, error)
-	DeleteFriend(context.Context, *DeleteFriendRequest) (*DeleteFriendResponse, error)
-	GetFriends(context.Context, *GetFriendsRequest) (*GetFriendsResponse, error)
 	mustEmbedUnimplementedUsersServer()
 }
 
@@ -148,18 +96,6 @@ func (UnimplementedUsersServer) Login(context.Context, *LoginRequest) (*LoginRes
 }
 func (UnimplementedUsersServer) ToInactive(context.Context, *ToInactiveRequest) (*ToInactiveResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ToInactive not implemented")
-}
-func (UnimplementedUsersServer) SendFriend(context.Context, *SendFriendRequest) (*SendFriendResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SendFriend not implemented")
-}
-func (UnimplementedUsersServer) AcceptFriend(context.Context, *AcceptFriendRequest) (*AcceptFriendResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AcceptFriend not implemented")
-}
-func (UnimplementedUsersServer) DeleteFriend(context.Context, *DeleteFriendRequest) (*DeleteFriendResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteFriend not implemented")
-}
-func (UnimplementedUsersServer) GetFriends(context.Context, *GetFriendsRequest) (*GetFriendsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetFriends not implemented")
 }
 func (UnimplementedUsersServer) mustEmbedUnimplementedUsersServer() {}
 func (UnimplementedUsersServer) testEmbeddedByValue()               {}
@@ -236,78 +172,6 @@ func _Users_ToInactive_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Users_SendFriend_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SendFriendRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(UsersServer).SendFriend(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Users_SendFriend_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UsersServer).SendFriend(ctx, req.(*SendFriendRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Users_AcceptFriend_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AcceptFriendRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(UsersServer).AcceptFriend(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Users_AcceptFriend_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UsersServer).AcceptFriend(ctx, req.(*AcceptFriendRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Users_DeleteFriend_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteFriendRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(UsersServer).DeleteFriend(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Users_DeleteFriend_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UsersServer).DeleteFriend(ctx, req.(*DeleteFriendRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Users_GetFriends_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetFriendsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(UsersServer).GetFriends(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Users_GetFriends_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UsersServer).GetFriends(ctx, req.(*GetFriendsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // Users_ServiceDesc is the grpc.ServiceDesc for Users service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -326,22 +190,6 @@ var Users_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ToInactive",
 			Handler:    _Users_ToInactive_Handler,
-		},
-		{
-			MethodName: "SendFriend",
-			Handler:    _Users_SendFriend_Handler,
-		},
-		{
-			MethodName: "AcceptFriend",
-			Handler:    _Users_AcceptFriend_Handler,
-		},
-		{
-			MethodName: "DeleteFriend",
-			Handler:    _Users_DeleteFriend_Handler,
-		},
-		{
-			MethodName: "GetFriends",
-			Handler:    _Users_GetFriends_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
