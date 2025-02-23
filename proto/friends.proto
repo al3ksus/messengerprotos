@@ -16,7 +16,9 @@ message SendRequest {
     int64 recipient_id = 2;
 }
 
-message SendResponse {}
+message SendResponse {
+    int64 friend_request_id = 1;
+}
 
 message AcceptRequest {
     int64 friend_request_id = 1;
