@@ -44,4 +44,5 @@ message Friend {
     int64 friend_request_id = 1;
     string friend_name = 2;
     bool accepted = 3;
+    bool sentFrom = 4; // True if request sent from user with id = GetFriendsRequest.user_id, else false
 }
