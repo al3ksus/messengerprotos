@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package messages;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "al3ksus.messenger.v1;messengerv1";
+
+service MessageService {
+    rpc Send(SendRequest) returns (SendResponse);
+    rpc Delete(DeleteRequest) returns (DeleteResponse);
+    rpc Edit(EditRequest) returns (EditResponse);
+}
+
+message SendRequest {
+    int64 chat_id = 1;
+    string text = 2;
+    google.protobuf.Timestamp time = 3;
+}
+
+message SendResponse {
+    int64 id = 1;
+}
+
+message DeleteRequest {
+    int64 id = 1;
+}
+
+message DeleteResponse {}
+
+message EditRequest {
+    int64 id = 1;
+    string text = 2;
+}
+
+message EditResponse {}
